@@ -4,6 +4,14 @@ ModulesStructureVersion=1
 Type=Class
 Version=8.1
 @EndOfDesignText@
+#If Documentation
+Updates
+V1.00
+	-Release
+V1.01
+	-BugFixes
+#End If
+
 #DesignerProperty: Key: Prefix, DisplayName: Prefix, FieldType: String, DefaultValue: %
 #DesignerProperty: Key: Suffix, DisplayName: Suffix, FieldType: String, DefaultValue: 
 
@@ -60,7 +68,10 @@ Public Sub DesignerCreateView (Base As Object, Lbl As Label, Props As Map)
 	mBase = Base
 	ini_props(Props)
 	xpnl_percent_background = xui.CreatePanel("")
-	mBase.AddView(xpnl_percent_background,0,0,0,0)
+	mBase.AddView(xpnl_percent_background,0,0,mBase.Width,mBase.Height)
+	
+	xcv_lines.Initialize(mBase)
+	xcv_text.Initialize(xpnl_percent_background)
 	
 	xpnl_percent_background.Color = xui.Color_Transparent
 	
@@ -95,9 +106,8 @@ End Sub
 Private Sub Base_Resize (Width As Double, Height As Double)
 	xpnl_percent_background.SetLayoutAnimated(0,0,0,Width,Height)
 	
-	
-	xcv_lines.Initialize(mBase)
-	xcv_text.Initialize(xpnl_percent_background)
+	xcv_lines.Resize(Width,Height)
+	xcv_text.Resize(Width,Height)
 	
 	Progress(g_bar_current)
 	
